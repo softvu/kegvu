@@ -75,6 +75,7 @@ export default {
 
       console.log('querying untappd...');
       // Lazily load input items
+      // TODO DONT USE CLIENT ID AND CLIENT SECRET IF WEB APP IS PUBLICLY ACCESSIBLE
       axios.get(`https://api.untappd.com/v4/search/beer?q=${this.search}&client_id=${UNTAPPD.client_id}&client_secret=${UNTAPPD.client_secret}`)
         .then(res => {
           this.queryResults = (res.data && res.data.response && res.data.response.beers && res.data.response.beers.items) || []; // >_>
