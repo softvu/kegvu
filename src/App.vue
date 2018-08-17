@@ -2,19 +2,18 @@
   <v-app>
     <v-toolbar app d-flex align-center>
       <v-toolbar-title>KegVu</v-toolbar-title>
+      <v-spacer></v-spacer>
 
       <v-autocomplete
         @input="addBeer"
+        placeholder="Search Untappd Beers"
         :items="items"
         :loading="isLoading"
         :search-input.sync="search"
-        hide-no-data
-        hide-selected
         item-text="Description"
-        placeholder="Search Untappd Beers"
-        prepend-icon="mdi-database-search"
         return-object
       ></v-autocomplete>
+
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
@@ -47,7 +46,7 @@ export default {
     };
   },
   computed: {
-    items () {
+    items() {
       return this.queryResults.map(data => {
         const Description = `${data.beer.beer_name} by ${data.brewery.brewery_name}`;
         // const bid = data.beer.bid; // move beer ID up so v-autcomplete can use it as an item value
@@ -62,15 +61,13 @@ export default {
     },
   },
   created() {
-    // TODO first call works but subsequent calls not working...?
     // we only get 100 untappd API calls per hour ;(
     this.queryUntappd = debounce(this.queryUntappd, 700, { 'maxWait': 3500 });
   },
   methods: {
     queryUntappd() {
-      // Items have already been loaded
-      if (this.items.length > 0) return;
-
+      // prevent unnecessary queries such as when field becomes empty
+      if (this.search.length < 4) return;
       this.isLoading = true;
 
       console.log('querying untappd...');
@@ -87,6 +84,7 @@ export default {
     },
     addBeer(data) {
       this.beers.push(data);
+      this.search = '';
     },
   },
 }
