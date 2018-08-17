@@ -2,36 +2,45 @@
   <v-container fluid>
     <v-slide-y-transition mode="out-in">
       <v-layout row align-center>
-        <v-card class="ma-4" v-for="data in beers">
+        <div class="ma-4 beer" v-for="beer in beers">
           <!-- TODO there's a better image if you use the beer info API endpoint -->
-          <v-card-media :src="data.beer.beer_label" height="200px"></v-card-media>
+          <img :src="beer.beer_label_hd" height="300px"></img>
 
-          <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">{{ data.beer.beer_name }}</h3>
-              <div>Made by {{ data.brewery.brewery_name }}</div>
-            </div>
-          </v-card-title>
+          <h2 primary-title>
+            <!-- <h3 class="headline mb-0">{{ beer.beer_name }}</h3> -->
+            {{ beer.beer_name }}
+          </h2>
+          <p>Made by {{ beer.brewery.brewery_name }}</p>
 
           <v-card-actions>
             <v-btn flat color="orange">Share</v-btn>
             <v-btn flat color="orange">Explore</v-btn>
           </v-card-actions>
-        </v-card>
+        </div>
       </v-layout>
     </v-slide-y-transition>
   </v-container>
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
+
 export default {
   name: 'BeerDisplay',
-  props: {
-    beers: Array,
-  }
+  computed: {
+    ...mapState(['beers']),
+  },
+  methods: {
+    ...mapMutations(['REMOVE_BEER']),
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.beer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 </style>

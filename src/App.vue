@@ -1,11 +1,11 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-toolbar app d-flex align-center>
       <v-toolbar-title>KegVu</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-autocomplete
-        @input="addBeer"
+        @input="addBeer($event); search=''"
         placeholder="Search Untappd Beers"
         :items="items"
         :loading="isLoading"
@@ -17,7 +17,7 @@
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
-      <BeerDisplay :beers="beers"/>
+      <BeerDisplay/>
     </v-content>
     <v-footer fixed app>
       <span>&copy; {{ (new Date()).getFullYear() }}</span>
@@ -28,6 +28,7 @@
 <script>
 import axios from 'axios';
 import debounce from 'lodash/debounce';
+import { mapActions } from 'vuex';
 import { UNTAPPD } from './config';
 import BeerDisplay from './components/BeerDisplay';
 
@@ -38,7 +39,6 @@ export default {
   },
   data () {
     return {
-      beers: [],
       descriptionLimit: 60,
       queryResults: [],
       isLoading: false,
@@ -52,8 +52,8 @@ export default {
         // const bid = data.beer.bid; // move beer ID up so v-autcomplete can use it as an item value
 
         return Object.assign({}, data, { Description });
-      })
-    }
+      });
+    },
   },
   watch: {
     search() {
@@ -65,6 +65,7 @@ export default {
     this.queryUntappd = debounce(this.queryUntappd, 700, { 'maxWait': 3500 });
   },
   methods: {
+    ...mapActions(['addBeer']),
     queryUntappd() {
       // prevent unnecessary queries such as when field becomes empty
       if (this.search.length < 4) return;
@@ -81,10 +82,6 @@ export default {
           console.error(err);
         })
         .finally(() => (this.isLoading = false));
-    },
-    addBeer(data) {
-      this.beers.push(data);
-      this.search = '';
     },
   },
 }
