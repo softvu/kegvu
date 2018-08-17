@@ -12,6 +12,7 @@
     "lodash": "^4.17.10",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
+    "vue-particles": "^1.0.9",
     "vuetify": "^1.1",
     "vuex": "^3.0.1"
   },

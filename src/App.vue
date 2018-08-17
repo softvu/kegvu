@@ -5,6 +5,7 @@
       <v-toolbar-title>KegVu</v-toolbar-title>
       <v-spacer/>
       <BeerSearch v-if="beers.length < 2"/>
+      <!-- <div id="particle-js" slot="extension"></div> -->
     </v-toolbar>
     <v-content>
       <BeerDisplay v-if="beers.length < 3"/>

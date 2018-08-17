@@ -19,9 +19,9 @@
           clearable 
           autofocus
         ></v-text-field>
-          
+
         <v-list three-line>
-          <v-list-tile v-for="item in queryResults" avatar @click="onBeerSelect(item)">
+          <v-list-tile v-for="item in queryResults" :key="item.beer.bid" avatar @click="onBeerSelect(item)">
             <v-list-tile-avatar>
               <img :src="item.beer.beer_label"/>
             </v-list-tile-avatar>

@@ -1,20 +1,13 @@
 <template>
   <v-layout class="BeerDisplay" row align-center>
-    <div class="ma-4 beer" v-for="beer in beers">
-      <!-- TODO there's a better image if you use the beer info API endpoint -->
-      <img :src="beer.beer_label_hd" height="300px"></img>
+    <v-flex xs6 class="ma-4 beer" v-for="beer in beers" :key="beer.bid">
+      <img :src="beer.beer_label_hd"/>
 
-      <h2 primary-title>
-        <!-- <h3 class="headline mb-0">{{ beer.beer_name }}</h3> -->
-        {{ beer.beer_name }}
-      </h2>
+      <h2 primary-title>{{ beer.beer_name }}</h2>
       <p>Made by {{ beer.brewery.brewery_name }}</p>
 
-      <v-card-actions>
-        <v-btn flat color="orange">Share</v-btn>
-        <v-btn flat color="orange">Explore</v-btn>
-      </v-card-actions>
-    </div>
+      <v-btn @click="REMOVE_BEER(beer.bid)" color="error">Delete</v-btn>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -34,12 +27,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.BeerDisplay {
-  display: inline-flex;
-}
 .beer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  img {
+    height: 60vh;
+  }
 }
 </style>
