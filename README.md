@@ -2,8 +2,11 @@
 
 ## Project setup
 ```
+nvm use 8
 npm install
 ```
+
+- Add UNTAPPD.client_secret, UNTAPPD.client_id, and UNTAPPD.beerExample to src/config.js
 
 ### Compiles and hot-reloads for development
 ```
