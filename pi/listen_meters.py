@@ -1,30 +1,26 @@
 import argparse, time, sys
 from datetime import datetime
 import redis
-# from gpiozero.pins.mock import MockFactory
 from gpiozero import Button, Device, InputDevice
 
-Device.pin_factory = MockFactory()
+PULSES_PER_LITER = 450
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('pins', metavar='P', type=int, nargs='+',
                     help='A Pi pin to listen to (BOARD numbering)')
 args = parser.parse_args()
-print(args.pins)
-quit()
+# print(args.pins)
+# quit()
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
-PULSES_PER_LITER = 450
+def pressed(pin):
+    return lambda ():
+        r.inrc('pin-{}'.format(pin))
 
-# pin = InputDevice(parser)
-pin = Button(14)
-
-def pressed():
-    print('1', end='', flush=True)
-
-
-pin.when_pressed = pressed
+for pin in pins
+    pinButton = Button(pin)
+    pinButton.when_pressed = pressed(pin)
 
 # last_val = None
 # start = datetime.now()
