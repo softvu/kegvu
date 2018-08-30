@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // start with fake data for testing purposes
-    beers: [{ ...EXAMPLE, bid: 1 }, { ...EXAMPLE, bid: 2 }],
+    // beers: [{ ...EXAMPLE, bid: 1 }, { ...EXAMPLE, bid: 2 }],
+    beers: [],
   },
   mutations: {
     ADD_BEER: (state, beer) => {

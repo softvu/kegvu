@@ -19,3 +19,8 @@ npm run build
 ```
 npm run lint
 ```
+
+# Deploy
+
+1. Add pi hostname for pi's IP
+2. `npm run deploy`
