@@ -6,12 +6,14 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "rsync -avP ./dist/ pi@pi:~/kegvu/dist"
+    "deploy": "npm run build && rsync -avP ./dist/ pi@pi:~/kegvu/dist",
+    "prodserve": "serve -s -l 5000 dist"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.10",
     "register-service-worker": "^1.0.0",
+    "serve": "^10.0.0",
     "vue": "^2.5.16",
     "vue-particles": "^1.0.9",
     "vuetify": "^1.1",
