@@ -1,7 +1,8 @@
 <template>
   <v-layout class="BeerDisplay" row align-center>
     <v-flex xs6 class="ma-4 beer" v-for="beer in beers" :key="beer.bid">
-      <img :src="beer.beer_label_hd"/>
+      <!-- <img :src="beer.beer_label_hd"/> -->
+      <keg :percent="100"></keg>
 
       <h2 primary-title>{{ beer.beer_name }}</h2>
       <p>Made by {{ beer.brewery.brewery_name }}</p>
@@ -12,10 +13,12 @@
 </template>
 
 <script>
+import Keg from './Keg';
 import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'BeerDisplay',
+  components: { Keg },
   computed: {
     ...mapState(['beers']),
   },

@@ -2,5 +2,5 @@
 
 python3 pi/listen_meters.py 14
 
-npm run serve
 node api
+npm run prodserve
