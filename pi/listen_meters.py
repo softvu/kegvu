@@ -11,16 +11,18 @@ parser.add_argument('pins', metavar='P', type=int, nargs='+',
 args = parser.parse_args()
 # print(args.pins)
 # quit()
+pins = args.pin
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 def pressed(pin):
-    return lambda ():
-        r.inrc('pin-{}'.format(pin))
+    return lambda x: r.inrc('pin-{}'.format(pin))
 
-for pin in pins
+for pin in pins:
     pinButton = Button(pin)
     pinButton.when_pressed = pressed(pin)
+
+    print('Listening on pin {}...'.format(pin))
 
 # last_val = None
 # start = datetime.now()
