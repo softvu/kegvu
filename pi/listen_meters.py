@@ -11,7 +11,7 @@ parser.add_argument('pins', metavar='P', type=int, nargs='+',
 args = parser.parse_args()
 # print(args.pins)
 # quit()
-pins = args.pin
+pins = args.pins
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
