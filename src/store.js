@@ -1,14 +1,14 @@
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { UNTAPPD, EXAMPLE } from './config';
+import { UNTAPPD } from './config';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     // start with fake data for testing purposes
-    beers: [{ ...EXAMPLE, bid: 1 }, { ...EXAMPLE, bid: 2 }],
+    beers: UNTAPPD.exampleBeer ? [{ ...UNTAPPD.exampleBeer, bid: 1 }, { ...UNTAPPD.exampleBeer, bid: 2 }] : [],
   },
   mutations: {
     ADD_BEER: (state, beer) => {
