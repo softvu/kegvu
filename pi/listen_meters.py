@@ -17,7 +17,13 @@ pins = args.pins
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 def pressed(pin):
-    return lambda x: r.inrc('pin-{}'.format(pin))
+    def handler():
+        key = 'pin-{}'.format(pin)
+        r.incr(key)
+        val = r.get(key)
+        r.publish(key, val)
+
+    return handler
 
 for pin in pins:
     pinButton = Button(pin)
