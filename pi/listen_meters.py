@@ -25,6 +25,7 @@ def pressed(pin):
         with r.pipeline() as pipe:
             pipe.watch(key)
             pipe.incr(key)
+            val = pipe.get(key)
             pipe.publish(key, val)
             pipe.execute()
 
