@@ -118,7 +118,6 @@ export default {
       this.ws.onmessage = (msg) => {
         this.pulses = msg.data;
         this.percent = pulsesToKegFillRatio(this.pulses) * 100;
-        this.$forceUpdate();
       };
     },
 
