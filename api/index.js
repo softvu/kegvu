@@ -47,21 +47,22 @@ app.post('/:pin', async (req, res) => {
   let val;
 
   if (req.body && req.body.pulses) {
+    let num = 0;
     try {
-      val = parseInt(req.body.pulses, 10);
+      num = parseInt(req.body.pulses, 10);
     }
     catch (e) {
       return res.status(400).send('Bad body!');
     }
 
-    if (isNaN(val)) return res.status(400).send('Bad body!');
-    await redisClient.setAsync(`pin-${req.params.pin}`, val);
-    val = await redisClient.getAsync(`pin-${req.params.pin}`);
+    if (isNaN(num)) return res.status(400).send('Bad body!');
+    await redisClient.setAsync(key, num);
+    val = await redisClient.getAsync(key);
   } else {
-    val = await redisClient.incrAsync(`pin-${req.params.pin}`);
+    val = await redisClient.incrAsync(key);
   }
 
-  redisClient.publish(key, val);
+  await redisClient.publishAsync(key, val);
 
   res.send({ count: val });
 });
