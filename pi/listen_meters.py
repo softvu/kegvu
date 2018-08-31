@@ -28,6 +28,7 @@ def pressed(pin):
             val = pipe.get(key)
             pipe.publish(key, val)
             pipe.execute()
+            print('key', key, val)
 
     return handler
 
