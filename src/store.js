@@ -65,10 +65,13 @@ export default new Vuex.Store({
         });
     },
     fetchPins({ commit }) {
-      api.fetchPins()
+      return api.fetchPins()
       .then(pins => {
         commit('SET_PINS', pins);
       });
+    },
+    updatePin(store, { pin, pulses }) {
+      return api.updatePin(pin, pulses);
     },
   },
 })

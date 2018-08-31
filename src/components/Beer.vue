@@ -36,6 +36,9 @@
                     required
                   ></v-select>
                 </v-flex>
+                <v-flex md12>
+                  <v-slider v-model="formBeer.fillPercent" label="Fill Percentage" min="0" max="100" thumb-label="always"></v-slider>
+                </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
@@ -84,10 +87,10 @@ import cloneDeep from 'lodash/cloneDeep';
 import moment from 'moment';
 import Keg from './Keg';
 import { FULL_KEG_PULSES, pulsesToKegFillRatio } from '../services/beer-math';
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
-  name: 'BeerDisplay',
+  name: 'Beer',
   components: { Keg },
   data: () => ({
     percent: 100,
@@ -106,17 +109,27 @@ export default {
     this.setPin(this.beer.pin);
   },
   computed: {
+    fillPercent() {
+      return (FULL_KEG_PULSES - this.pulses) / FULL_KEG_PULSES  * 100;
+    },
+
     ...mapState(['pins']),
   },
   methods: {
     openDialog() {
       this.formBeer = cloneDeep(this.beer);
+      this.formBeer.fillPercent = this.fillPercent;
       this.dialog = true;
     },
     updateBeer() {
       const updatedBeer = merge({}, this.beer, this.formBeer);
       this.UPDATE_BEER(updatedBeer);
       this.setPin(updatedBeer.pin);
+
+      if (updatedBeer.fillPercent !== this.fillPercent) {
+        this.updatePin({ pin: updatedBeer.pin, pulses: FULL_KEG_PULSES - ((updatedBeer.fillPercent / 100) * FULL_KEG_PULSES) });
+      }
+
       this.dialog = false;
     },
     setPin(pin) {
@@ -127,18 +140,12 @@ export default {
 
       this.ws.onmessage = (msg) => {
         this.pulses = msg.data;
-      }
+        this.percent = pulsesToKegFillRatio(this.pulses) * 100;
+      };
     },
 
     ...mapMutations(['REMOVE_BEER', 'UPDATE_BEER']),
-  },
-  watch: {
-    pulses: {
-      handler(pulses) {
-        this.percent = pulsesToKegFillRatio(pulses) * 100;
-      },
-      immediate: true,
-    },
+    ...mapActions(['updatePin']),
   },
   filters: {
     formatDate: function(value) {

@@ -90,33 +90,15 @@ export default {
       default: 100,
     },
   },
-  mounted() {
-
-  },
   watch: {
     percent: {
       handler: function(p) {
-        // console.log('percent', p);
-
         const height = HEIGHT * (p / 100);
         this.height = height;
         this.y = HEIGHT + Y - this.height;
 
         this.color = perc2color(p);
-
-        // let range = 92-39;
-        // let add = range-Math.round(range*(p/100));
-        // console.log(range, add);
-
-        // this.$refs.keg.css({
-        //     background: `linear-gradient(to bottom,
-        //     rgba(226,184,43,0)  0%,
-        //     rgba(226,184,43,0)  ${39+add}%,
-        //     rgba(226,184,43,1)  ${39+add}%,
-        //     rgba(226,184,43,1)  92%,
-        //     rgba(226,184,43,0)  92%,
-        //     rgba(226,184,43,0)  100%)`
-        // });
+        this.$forceUpdate();
       },
       immediate: true,
     },
