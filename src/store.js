@@ -2,6 +2,7 @@ import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { UNTAPPD } from './config';
+import api from './services/api';
 
 Vue.use(Vuex);
 
@@ -11,14 +12,10 @@ export default new Vuex.Store({
     beers: UNTAPPD.exampleBeer ? [{ ...UNTAPPD.exampleBeer, bid: 1 }, { ...UNTAPPD.exampleBeer, bid: 2 }] : [],
     pins: [],
   },
+  getters: {
+    beers: state => state.beers,
+  },
   mutations: {
-    ADD_BEER: (state, beer) => {
-      console.log('adding beer', beer);
-      state.beers.push(beer);
-    },
-    REMOVE_BEER: (state, bid) => {
-      state.beers = state.beers.filter(b => b.bid !== bid);
-    },
     initialiseStore(state) {
 			// Check if the ID exists
 			if(localStorage.getItem('store')) {
@@ -27,7 +24,23 @@ export default new Vuex.Store({
 					Object.assign(state, JSON.parse(localStorage.getItem('store')))
 				);
 			}
-		}
+    },
+    
+    ADD_BEER: (state, beer) => {
+      console.log('adding beer', beer);
+      state.beers.push(beer);
+    },
+    REMOVE_BEER: (state, bid) => {
+      state.beers = state.beers.filter(b => b.bid !== bid);
+    },
+    UPDATE_BEER: (state, beer) => {
+      const oldBeer = state.beers.filter(b => b.bid === beer.bid);
+      state.beers.splice(state.beers.indexOf(oldBeer), 1, beer);
+    },
+
+    SET_PINS: (state, pins) => {
+      state.pins = pins;
+    }
   },
   actions: {
     addBeer: ({ commit }, { beer }) => {
@@ -42,6 +55,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.error('Error from Untappd: ', err);
         });
+    },
+    fetchPins({ commit }) {
+      api.fetchPins()
+      .then(pins => {
+        commit('SET_PINS', pins);
+      });
     },
   },
 })

@@ -2,6 +2,7 @@ import argparse, time, sys
 from datetime import datetime
 import redis
 from gpiozero import Button, Device, InputDevice
+from signal import pause
 
 PULSES_PER_LITER = 450
 
@@ -16,13 +17,28 @@ pins = args.pins
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 def pressed(pin):
-    return lambda x: r.inrc('pin-{}'.format(pin))
+    def handler():
+        key = 'pin-{}'.format(pin)
+        # r.incr(key)
+        # val = r.get(key)
+        # r.publish(key, val)
+        with r.pipeline() as pipe:
+            pipe.watch(key)
+            pipe.incr(key)
+            val = pipe.get(key)
+            pipe.publish(key, val)
+            pipe.execute()
+            print('key', key, val)
+
+    return handler
 
 for pin in pins:
     pinButton = Button(pin)
     pinButton.when_pressed = pressed(pin)
 
     print('Listening on pin {}...'.format(pin))
+
+pause()
 
 # last_val = None
 # start = datetime.now()
