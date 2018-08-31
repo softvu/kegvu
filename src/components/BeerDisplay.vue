@@ -19,7 +19,6 @@
           <h5 class="subheading">{{ beer.beer_ibu }} IBU</h5>
           <p class="body-1">{{ beer.beer_description }}</p>
           <h5 class="subheading">Tapped {{ beer.tapped | formatDate }}</h5>
-          <v-btn @click="REMOVE_BEER(beer.bid)" color="error">Delete</v-btn>
         </v-flex>
       </v-layout>
     </v-flex>
@@ -28,7 +27,6 @@
 
 <script>
 import Beer from './Beer';
-import Keg from './Keg';
 import moment from 'moment';
 import { mapMutations, mapState } from 'vuex';
 

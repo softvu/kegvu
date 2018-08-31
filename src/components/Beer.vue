@@ -1,10 +1,7 @@
 <template>
-  <div class="beer">
-    <keg :percent="percent"></keg>
+  <div class="beer" @click="editMode = !editMode">
+    <keg :percent="percent" ></keg>
 
-    <h2 primary-title class="beer-name" @click="editMode = !editMode">{{ beer.beer_name }}</h2>
-    <p>Made by {{ beer.brewery.brewery_name }}</p>
-    
     <div>
       <!-- <v-btn v-show="editMode" @click="editBeer" color="primary">Edit</v-btn> -->
       <v-dialog v-model="dialog" persistent max-width="500px">
