@@ -23,36 +23,9 @@
                     required
                   ></v-select>
                 </v-flex>
-
-                <!-- <v-flex xs12 sm6 md4>
-                  <v-text-field
-                    label="Legal last name"
-                    hint="example of persistent helper text"
-                    persistent-hint
-                    required
-                  ></v-text-field>
+                <v-flex md12>
+                  <v-slider v-model="formBeer.fillPercent" label="Fill Percentage" min="0" max="100" thumb-label="always"></v-slider>
                 </v-flex>
-                <v-flex xs12>
-                  <v-text-field label="Email" required></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field label="Password" type="password" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-select
-                    :items="['0-17', '18-29', '30-54', '54+']"
-                    label="Age"
-                    required
-                  ></v-select>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-autocomplete
-                    :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                    label="Interests"
-                    multiple
-                    chips
-                  ></v-autocomplete>
-                </v-flex> -->
               </v-layout>
             </v-container>
           </v-card-text>
@@ -91,10 +64,10 @@ import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import Keg from './Keg';
 import { FULL_KEG_PULSES, pulsesToKegFillRatio } from '../services/beer-math';
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
-  name: 'BeerDisplay',
+  name: 'Beer',
   components: { Keg },
   data: () => ({
     percent: 100,
@@ -113,17 +86,27 @@ export default {
     this.setPin(this.beer.pin);
   },
   computed: {
+    fillPercent() {
+      return (FULL_KEG_PULSES - this.pulses) / FULL_KEG_PULSES  * 100;
+    },
+
     ...mapState(['pins']),
   },
   methods: {
     openDialog() {
       this.formBeer = cloneDeep(this.beer);
+      this.formBeer.fillPercent = this.fillPercent;
       this.dialog = true;
     },
     updateBeer() {
       const updatedBeer = merge({}, this.beer, this.formBeer);
       this.UPDATE_BEER(updatedBeer);
       this.setPin(updatedBeer.pin);
+
+      if (updatedBeer.fillPercent !== this.fillPercent) {
+        this.updatePin({ pin: updatedBeer.pin, pulses: FULL_KEG_PULSES - ((updatedBeer.fillPercent / 100) * FULL_KEG_PULSES) });
+      }
+
       this.dialog = false;
     },
     setPin(pin) {
@@ -134,18 +117,12 @@ export default {
 
       this.ws.onmessage = (msg) => {
         this.pulses = msg.data;
-      }
+        this.percent = pulsesToKegFillRatio(this.pulses) * 100;
+      };
     },
 
     ...mapMutations(['REMOVE_BEER', 'UPDATE_BEER']),
-  },
-  watch: {
-    pulses: {
-      handler(pulses) {
-        this.percent = pulsesToKegFillRatio(pulses) * 100;
-      },
-      immediate: true,
-    },
+    ...mapActions(['updatePin']),
   },
 };
 </script>
