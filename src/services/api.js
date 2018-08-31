@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default {
-  getPins() {
-    return axios.get('/pins');
+  fetchPins() {
+    return axios.get('/pins').then(res => res.data);
   },
 };

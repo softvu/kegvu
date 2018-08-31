@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import BeerDisplay from './components/BeerDisplay';
 import BeerSearch from './components/BeerSearch';
 
@@ -28,8 +28,15 @@ export default {
     BeerDisplay,
     BeerSearch,
   },
+  mounted() {
+    console.log('this.fetchPins', this.fetchPins);
+    this.fetchPins();
+  },
   computed: {
     ...mapState(['beers']),
+  },
+  methods: {
+    ...mapActions(['fetchPins']),
   },
 }
 </script>

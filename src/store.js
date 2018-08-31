@@ -13,9 +13,7 @@ export default new Vuex.Store({
     pins: [],
   },
   getters: {
-    beers() {
-      return this.$store.state.beers;
-    },
+    beers: state => state.beers,
   },
   mutations: {
     initialiseStore(state) {
@@ -34,6 +32,10 @@ export default new Vuex.Store({
     },
     REMOVE_BEER: (state, bid) => {
       state.beers = state.beers.filter(b => b.bid !== bid);
+    },
+    UPDATE_BEER: (state, beer) => {
+      const oldBeer = state.beers.filter(b => b.bid === beer.bid);
+      state.beers.splice(state.beers.indexOf(oldBeer), 1, beer);
     },
 
     SET_PINS: (state, pins) => {
@@ -54,8 +56,8 @@ export default new Vuex.Store({
           console.error('Error from Untappd: ', err);
         });
     },
-    getPins({ commit }) {
-      api.getPins()
+    fetchPins({ commit }) {
+      api.fetchPins()
       .then(pins => {
         commit('SET_PINS', pins);
       });

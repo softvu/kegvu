@@ -10,20 +10,26 @@ const app = express();
 
 const expressWs = require('express-ws')(app);
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 app.get('/', async (req, res) => {
   const pins = await redisClient.keysAsync('pin-*');
 
   const vals = await redisClient.mgetAsync(pins);
 
-  const ret = zipObject(pins, vals);
+  const ret = zipObject(pins.map(x => x.replace('pin-', '')), vals);
 
-  res.send({ pins: ret });
+  res.send(ret);
 });
 
 app.get('/pins', async (req, res) => {
   const pins = await redisClient.keysAsync('pin-*');
 
-  res.send({ pins });
+  res.send(pins.map(x => x.replace('pin-', '')));
 });
 
 app.get('/:pin', async (req, res) => {
