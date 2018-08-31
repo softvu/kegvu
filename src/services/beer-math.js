@@ -7,7 +7,7 @@ export const FULL_KEG_PULSES = PULSES_PER_LITER * LITERS_PER_KEG;
 
 export const pulsesToLiters = (pulses) => pulses / PULSES_PER_LITER;
 
-export const pulsesToKegFillRatio = (pulses) => pulses / PULSES_PER_LITER / LITERS_PER_KEG;
+export const pulsesToKegFillRatio = (pulses) => (FULL_KEG_PULSES - pulses) / PULSES_PER_LITER / LITERS_PER_KEG;
 
 export const pulsesToPints = (pulses) => pulses / PULSES_PER_LITER / PINTS_PER_LITER;
 

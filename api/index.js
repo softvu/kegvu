@@ -56,15 +56,21 @@ app.post('/reset/:pin', async (req, res) => {
   res.send(val);
 });
 
-app.ws('/subscribe/:pin', function(ws, req) {
+app.ws('/subscribe/:pin', async function(ws, req) {
   const key = `pin-${req.params.pin}`;
   const sub = redis.createClient();
 
-  sub.on('message', async (channel, message) => {
+  sub.on('message', (channel, message) => {
+    if (ws.readyState !== 1) return;
+
     ws.send(message);
   });
 
   sub.subscribe(key);
+
+  const val = await redisClient.getAsync(key);
+
+  ws.send(val);
 });
 
 const listener = app.listen(process.env.PORT || 3030, () => console.log(`Example app listening on http://localhost:${listener.address().port}`));

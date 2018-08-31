@@ -110,13 +110,9 @@ export default {
     beer: Object,
   },
   mounted() {
-    
+    this.setPin(this.beer.pin);
   },
   computed: {
-    pin: {
-      get: () => this.beer.pin,
-    },
-
     ...mapState(['pins']),
   },
   methods: {
@@ -127,23 +123,29 @@ export default {
     updateBeer() {
       const updatedBeer = merge({}, this.beer, this.formBeer);
       this.UPDATE_BEER(updatedBeer);
+      this.setPin(updatedBeer.pin);
       this.dialog = false;
     },
     setPin(pin) {
       this.pin = pin;
       if (this.ws) this.ws.close();
 
-      this.ws = WebSocket(`ws://localhost:3030/subscribe/${this.pin}`);
+      this.ws = new WebSocket(`ws://localhost:3030/subscribe/${this.pin}`);
 
-      this.ws.onmessage = (msg) => this.pulses = msg;
+      this.ws.onmessage = (msg) => {
+        this.pulses = msg.data;
+      }
     },
 
     ...mapMutations(['REMOVE_BEER', 'UPDATE_BEER']),
   },
   watch: {
-    pulses: (pulses) => {
-      this.percent = pulsesToKegFillRatio(pulses) * 100;
+    pulses: {
+      handler(pulses) {
+        this.percent = pulsesToKegFillRatio(pulses) * 100;
+      },
+      immediate: true,
     },
-  }
+  },
 };
 </script>

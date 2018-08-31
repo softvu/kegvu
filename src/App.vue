@@ -29,7 +29,6 @@ export default {
     BeerSearch,
   },
   mounted() {
-    console.log('this.fetchPins', this.fetchPins);
     this.fetchPins();
   },
   computed: {
