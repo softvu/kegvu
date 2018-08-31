@@ -14,6 +14,7 @@ export default new Vuex.Store({
   mutations: {
     ADD_BEER: (state, beer) => {
       console.log('adding beer', beer);
+      beer.tapped = new Date;
       state.beers.push(beer);
     },
     REMOVE_BEER: (state, bid) => {

@@ -35,27 +35,30 @@
 <style lang="scss" scoped>
 svg {
   fill: #ccc;
-  height: 70vh;
+  height: 35vh;
+  width: 35vh;
 }
 
-// .keg {
-//     // min-height: 400px;
+.keg {
+  margin-left: 0;
+  margin-right: 0;
+    // min-height: 400px;
 
-//     max-width: 200px;
-//     font-size: 50px;
-//     position: relative;
-//     background: linear-gradient(to bottom, 
-//         rgba(226,184,43,0)  0%,
-//         rgba(226,184,43,0)  39%,
-//         rgba(226,184,43,1)  39%,
-//         rgba(226,184,43,1)  92%,
-//         rgba(226,184,43,0)  92%,
-//         rgba(226,184,43,0)  100%);
-//     -webkit-animate: background 1s ease-in-out;
-// }
+    // max-width: 200px;
+    // font-size: 50px;
+    // position: relative;
+    // background: linear-gradient(to bottom,
+    //     rgba(226,184,43,0)  0%,
+    //     rgba(226,184,43,0)  39%,
+    //     rgba(226,184,43,1)  39%,
+    //     rgba(226,184,43,1)  92%,
+    //     rgba(226,184,43,0)  92%,
+    //     rgba(226,184,43,0)  100%);
+    // -webkit-animate: background 1s ease-in-out;
+}
 
 svg g {
-  background: linear-gradient(to bottom, 
+  background: linear-gradient(to bottom,
         rgba(226,184,43,0)  0%,
         rgba(226,184,43,0)  39%,
         rgba(226,184,43,1)  39%,
@@ -94,7 +97,7 @@ export default {
     // 1 0 0 0 0
     // 0 1 0 0 0
     // 0 0 1 0 0
-    // 0 0 0 1 0 
+    // 0 0 0 1 0
     // ```,
     color: '#00FF00',
   }),
@@ -105,7 +108,7 @@ export default {
     },
   },
   mounted() {
-    
+
   },
   watch: {
     percent: {
@@ -123,7 +126,7 @@ export default {
         // console.log(range, add);
 
         // this.$refs.keg.css({
-        //     background: `linear-gradient(to bottom, 
+        //     background: `linear-gradient(to bottom,
         //     rgba(226,184,43,0)  0%,
         //     rgba(226,184,43,0)  ${39+add}%,
         //     rgba(226,184,43,1)  ${39+add}%,
