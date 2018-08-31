@@ -63,6 +63,8 @@ app.ws('/subscribe/:pin', async function(ws, req) {
   sub.on('message', (channel, message) => {
     if (ws.readyState !== 1) return;
 
+    console.log('sending', message);
+
     ws.send(message);
   });
 
