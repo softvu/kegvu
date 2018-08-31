@@ -13,11 +13,11 @@
     "axios": "^0.18.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
-    "momentjs": "^2.0.0",
     "register-service-worker": "^1.0.0",
     "serve": "^10.0.0",
     "vue": "^2.5.16",
     "vue-particles": "^1.0.9",
+    "vue-read-more": "^1.1.1",
     "vuetify": "^1.1",
     "vuex": "^3.0.1"
   },

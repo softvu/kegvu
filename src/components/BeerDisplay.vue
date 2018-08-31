@@ -4,7 +4,7 @@
       <v-layout>
         <v-flex xs4 class="lil-label">
 
-          <keg :percent="30" id="keg"></keg>
+          <keg :percent="beer.beer_ibu" id="keg"></keg>
 
           <!-- <img :src="beer.beer_label_hd" class="label"/> -->
         </v-flex>
@@ -18,13 +18,8 @@
           <h5 class="headline">{{ beer.beer_style }}</h5>
           <h5 class="subheading">{{ beer.beer_abv }}% ABV</h5>
           <h5 class="subheading">{{ beer.beer_ibu }} IBU</h5>
-          <h5 class="subheading">Tapped {{ beer.tapped | formatDate }}</h5>
           <p class="body-1">{{ beer.beer_description }}</p>
-          <!-- <p class="body-1" v-bind:class="{ 'show-less': !showMore[beer.bid]}">
-            {{ beer.beer_description}}
-            <a href="#" v-if="showMore[beer.bid]" v-on:click="showMore[beer.bid] = false">Show less</a>
-            <a href="#" v-if="!showMore[beer.bid]" v-on:click="showMore[beer.bid] = true">Show more</a>
-          </p> -->
+          <h5 class="subheading">Tapped {{ beer.tapped | formatDate }}</h5>
           <v-btn @click="REMOVE_BEER(beer.bid)" color="error">Delete</v-btn>
         </v-flex>
       </v-layout>
@@ -44,10 +39,7 @@ export default {
     ...mapState(['beers']),
   },
   methods: {
-    ...mapMutations(['REMOVE_BEER']),
-  },
-  propsData: {
-    showMore: {},
+    ...mapMutations(['REMOVE_BEER', 'UPDATE_VISIBILITY']),
   },
   filters: {
     formatDate: function(value) {
@@ -72,11 +64,17 @@ export default {
     float: left;
     margin-right: 10px;
   }
+  .description {
+    // display: block;
+    a {
+      display: inline-block;
+    }
+  }
   .show-less {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 500px;
+    max-width: 300px;
   }
 }
 </style>

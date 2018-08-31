@@ -15,10 +15,16 @@ export default new Vuex.Store({
     ADD_BEER: (state, beer) => {
       console.log('adding beer', beer);
       beer.tapped = new Date;
+      beer.full_visibility = false;
       state.beers.push(beer);
     },
     REMOVE_BEER: (state, bid) => {
       state.beers = state.beers.filter(b => b.bid !== bid);
+    },
+    UPDATE_VISIBILITY: (state, beer) => {
+      beer.full_visibility = !beer.full_visibility;
+      const beer_index = state.beers.findIndex((_beer) => _beer.bid == beer.bid);
+      state.beers[beer_index] = beer;
     },
     initialiseStore(state) {
 			// Check if the ID exists
