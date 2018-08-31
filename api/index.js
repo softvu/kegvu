@@ -1,5 +1,6 @@
 const zipObject = require('lodash/zipObject');
 const bluebird = require('bluebird');
+const bodyParser = require('body-parser');
 const express = require('express');
 const redis = require('redis');
 bluebird.promisifyAll(redis);
@@ -7,6 +8,8 @@ bluebird.promisifyAll(redis);
 const redisClient = redis.createClient();
 
 const app = express();
+app.use(bodyParser.text());
+app.use(bodyParser.json());
 
 const expressWs = require('express-ws')(app);
 
@@ -40,7 +43,22 @@ app.get('/:pin', async (req, res) => {
 
 app.post('/:pin', async (req, res) => {
   const key = `pin-${req.params.pin}`;
-  const val = await redisClient.incrAsync(`pin-${req.params.pin}`);
+
+  let val;
+
+  if (req.body && req.body.pulses) {
+    try {
+      val = parseInt(req.body.pulses, 10);
+      if (isNaN(val)) return res.status(400).send('Bad body!');
+      await redisClient.setAsync(`pin-${req.params.pin}`, val);
+      // val = await redisClient.getAsync(`pin-${req.params.pin}`, val);
+    }
+    catch (e) {
+      return res.status(400).send('Bad body!');
+    }
+  } else {
+    val = await redisClient.incrAsync(`pin-${req.params.pin}`);
+  }
 
   redisClient.publish(key, val);
 
