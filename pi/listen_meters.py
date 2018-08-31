@@ -2,6 +2,7 @@ import argparse, time, sys
 from datetime import datetime
 import redis
 from gpiozero import Button, Device, InputDevice
+from signal import pause
 
 PULSES_PER_LITER = 450
 
@@ -23,6 +24,8 @@ for pin in pins:
     pinButton.when_pressed = pressed(pin)
 
     print('Listening on pin {}...'.format(pin))
+
+pause()
 
 # last_val = None
 # start = datetime.now()
