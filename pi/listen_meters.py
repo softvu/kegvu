@@ -19,9 +19,14 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 def pressed(pin):
     def handler():
         key = 'pin-{}'.format(pin)
-        r.incr(key)
-        val = r.get(key)
-        r.publish(key, val)
+        # r.incr(key)
+        # val = r.get(key)
+        # r.publish(key, val)
+        with r.pipeline() as pipe:
+            pipe.watch(key)
+            pipe.incr(key)
+            pipe.publish(key, val)
+            pipe.execute()
 
     return handler
 
