@@ -56,7 +56,7 @@ app.post('/:pin', async (req, res) => {
 
     if (isNaN(val)) return res.status(400).send('Bad body!');
     await redisClient.setAsync(`pin-${req.params.pin}`, val);
-    val = await redisClient.getAsync(`pin-${req.params.pin}`, val);
+    val = await redisClient.getAsync(`pin-${req.params.pin}`);
   } else {
     val = await redisClient.incrAsync(`pin-${req.params.pin}`);
   }
