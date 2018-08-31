@@ -39,24 +39,6 @@ svg {
   width: 35vh;
 }
 
-.keg {
-  margin-left: 0;
-  margin-right: 0;
-    // min-height: 400px;
-
-    // max-width: 200px;
-    // font-size: 50px;
-    // position: relative;
-    // background: linear-gradient(to bottom,
-    //     rgba(226,184,43,0)  0%,
-    //     rgba(226,184,43,0)  39%,
-    //     rgba(226,184,43,1)  39%,
-    //     rgba(226,184,43,1)  92%,
-    //     rgba(226,184,43,0)  92%,
-    //     rgba(226,184,43,0)  100%);
-    // -webkit-animate: background 1s ease-in-out;
-}
-
 svg g {
   background: linear-gradient(to bottom,
         rgba(226,184,43,0)  0%,
@@ -113,7 +95,7 @@ export default {
   watch: {
     percent: {
       handler: function(p) {
-        console.log('percent', p);
+        // console.log('percent', p);
 
         const height = HEIGHT * (p / 100);
         this.height = height;

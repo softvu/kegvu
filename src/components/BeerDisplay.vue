@@ -3,9 +3,8 @@
     <v-flex xs6 class="ma-4 beer" v-for="beer in beers" :key="beer.bid">
       <v-layout>
         <v-flex xs4 class="lil-label">
-
-          <keg :percent="beer.beer_ibu" id="keg"></keg>
-
+          <beer :beer="beer"></beer>
+          <!-- <keg :percent="beer.beer_ibu" id="keg"></keg> -->
           <!-- <img :src="beer.beer_label_hd" class="label"/> -->
         </v-flex>
         <v-flex xs8>
@@ -28,13 +27,14 @@
 </template>
 
 <script>
+import Beer from './Beer';
 import Keg from './Keg';
 import moment from 'moment';
 import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'BeerDisplay',
-  components: { Keg },
+  components: { Beer },
   computed: {
     ...mapState(['beers']),
   },
