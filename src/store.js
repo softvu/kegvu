@@ -36,7 +36,7 @@ export default new Vuex.Store({
       } else {
         // Untappd will set a default beer image if none are available
         beer.image = beer.beer_label
-      };
+      }
       state.beers.push(beer);
     },
     REMOVE_BEER: (state, bid) => {
