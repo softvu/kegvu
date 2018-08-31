@@ -1,7 +1,23 @@
 <template>
-  <div class="beer" @click="editMode = !editMode">
+  <div class="beer mt-5" @click="editMode = !editMode">
     <keg :percent="percent" ></keg>
-
+    <div>
+      <img :src="beer.image" class="label"/>
+      <h1 class="display-2 text-truncate">{{ beer.beer_name }}</h1>
+      <h3 class="display-1 text-no-wrap font-weight-light">{{ beer.brewery.brewery_name }}</h3>
+    </div>
+    <br/>
+    <div class="description">
+      <h5 class="headline">
+        <v-layout>
+          <v-flex xs8>{{ beer.beer_style }}</v-flex>
+          <v-flex xs2>{{ beer.beer_abv }}% ABV</v-flex>
+          <v-flex xs2>{{ beer.beer_ibu }} IBU</v-flex>
+        </v-layout>
+      </h5>
+      <p class="subheading condensed">{{ beer.beer_description || 'No description'}}</p>
+      <h5 class="subheading font-weight-light">Tapped {{ beer.tapped | formatDate }}</h5>
+    </div>
     <div>
       <!-- <v-btn v-show="editMode" @click="editBeer" color="primary">Edit</v-btn> -->
       <v-dialog v-model="dialog" persistent max-width="500px">
@@ -20,36 +36,6 @@
                     required
                   ></v-select>
                 </v-flex>
-
-                <!-- <v-flex xs12 sm6 md4>
-                  <v-text-field
-                    label="Legal last name"
-                    hint="example of persistent helper text"
-                    persistent-hint
-                    required
-                  ></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field label="Email" required></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field label="Password" type="password" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-select
-                    :items="['0-17', '18-29', '30-54', '54+']"
-                    label="Age"
-                    required
-                  ></v-select>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-autocomplete
-                    :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                    label="Interests"
-                    multiple
-                    chips
-                  ></v-autocomplete>
-                </v-flex> -->
               </v-layout>
             </v-container>
           </v-card-text>
@@ -73,10 +59,19 @@
   flex-direction: column;
   align-items: center;
 
-  img {
-    height: 60vh;
+  .label {
+    height: 9vh;
+    display: inline-block;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+    min-width: 75px;
   }
-
+  .description {
+    max-width: 750px;
+    min-width: 650px;
+  }
   .beer-name {
     cursor: pointer;
   }
@@ -86,6 +81,7 @@
 <script>
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
+import moment from 'moment';
 import Keg from './Keg';
 import { FULL_KEG_PULSES, pulsesToKegFillRatio } from '../services/beer-math';
 import { mapMutations, mapState } from 'vuex';
@@ -142,6 +138,13 @@ export default {
         this.percent = pulsesToKegFillRatio(pulses) * 100;
       },
       immediate: true,
+    },
+  },
+  filters: {
+    formatDate: function(value) {
+      if (value) {
+        return moment(String(value)).format('MM/DD/YYYY')
+      }
     },
   },
 };

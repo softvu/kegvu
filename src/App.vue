@@ -12,7 +12,7 @@
       <h2 v-else>Too many beers selected...</h2>
     </v-content>
     <v-footer fixed app>
-      <span>&copy; {{ (new Date()).getFullYear() }}</span>
+      <span>&copy; {{ (new Date()).getFullYear() }} Powered by Untappd</span>
     </v-footer>
   </v-app>
 </template>

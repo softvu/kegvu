@@ -35,8 +35,9 @@
 <style lang="scss" scoped>
 svg {
   fill: #ccc;
-  height: 35vh;
-  width: 35vh;
+  height: 50vh;
+  width: 50vh;
+  margin-top: -20px;
 }
 
 svg g {

@@ -28,6 +28,15 @@ export default new Vuex.Store({
 
     ADD_BEER: (state, beer) => {
       console.log('adding beer', beer);
+      beer.tapped = new Date;
+      if (beer.beer_label_hd != null && beer.beer_label_hd.length) {
+        beer.image = beer.beer_label_hd
+      } else if (beer.brewery.brewery_label != null && beer.brewery.brewery_label.length) {
+        beer.image = beer.brewery.brewery_label
+      } else {
+        // Untappd will set a default beer image if none are available
+        beer.image = beer.beer_label
+      };
       state.beers.push(beer);
     },
     REMOVE_BEER: (state, bid) => {
