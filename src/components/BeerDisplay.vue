@@ -1,21 +1,25 @@
 <template>
   <v-layout class="BeerDisplay" row align-center>
     <v-flex xs6 class="ma-4 beer" v-for="beer in beers" :key="beer.bid">
-      <img :src="beer.beer_label_hd"/>
+      <beer :beer="beer"></beer>
+      <!-- <img :src="beer.beer_label_hd"/>
+      <keg :percent="100"></keg>
 
       <h2 primary-title>{{ beer.beer_name }}</h2>
       <p>Made by {{ beer.brewery.brewery_name }}</p>
 
-      <v-btn @click="REMOVE_BEER(beer.bid)" color="error">Delete</v-btn>
+      <v-btn @click="REMOVE_BEER(beer.bid)" color="error">Delete</v-btn> -->
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import Beer from './Beer';
 import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'BeerDisplay',
+  components: { Beer },
   computed: {
     ...mapState(['beers']),
   },
@@ -36,3 +40,5 @@ export default {
   }
 }
 </style>
+
+
