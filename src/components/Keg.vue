@@ -96,6 +96,7 @@ export default {
         this.y = HEIGHT + Y - this.height;
 
         this.color = perc2color(p);
+        this.$forceUpdate();
       },
       immediate: true,
     },
