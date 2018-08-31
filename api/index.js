@@ -46,7 +46,7 @@ app.post('/:pin', async (req, res) => {
 
   let val;
 
-  if (req.body && req.body.pulses) {
+  if (req.body && req.body.hasOwnProperty('pulses')) {
     let num = 0;
     try {
       num = parseInt(req.body.pulses, 10);
