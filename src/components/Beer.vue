@@ -72,6 +72,7 @@
     min-width: 75px;
   }
   .description {
+    margin-left: 10px;
     max-width: 750px;
     min-width: 650px;
   }
