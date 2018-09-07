@@ -1,7 +1,10 @@
 apps:
   - script: ./pi/listen_meters.py
-    args: "14"
+    name: listen
+    args: "14 15"
     interpreter: "/usr/bin/python3"
   - script: ./api/index.js
+    name: api
   - script: ./node_modules/.bin/serve
     args: "-s -l 5000 dist"
+    name: ui
