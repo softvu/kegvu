@@ -16,6 +16,8 @@ pins = args.pins
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
+buttons = []
+
 def pressed(pin):
     def handler():
         key = 'pin-{}'.format(pin)
@@ -35,6 +37,7 @@ def pressed(pin):
 for pin in pins:
     pinButton = Button(pin)
     pinButton.when_pressed = pressed(pin)
+    buttons.append(pinButton)
 
     print('Listening on pin {}...'.format(pin))
 
