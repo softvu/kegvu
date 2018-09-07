@@ -9,14 +9,14 @@
         </v-btn>
         <v-toolbar-title>Add Beer</v-toolbar-title>
       </v-toolbar>
-      
+
       <div class="ma-4">
         <v-text-field
           v-model="search"
           class="query-field"
           label="Search Beer"
           prepend-icon="search"
-          clearable 
+          clearable
           autofocus
         ></v-text-field>
 
@@ -53,6 +53,7 @@ export default {
       search: '',
     };
   },
+  props: ['pin'],
   computed: {
     items() {
       console.log('recalculating items');
@@ -96,6 +97,7 @@ export default {
         .finally(() => (this.isLoading = false));
     },
     onBeerSelect(item) {
+      item.pin = this.pin;
       this.addBeer(item)
         .then(() => this.close());
     },

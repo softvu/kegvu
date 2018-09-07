@@ -31,7 +31,6 @@ app.get('/', async (req, res) => {
 
 app.get('/pins', async (req, res) => {
   const pins = await redisClient.keysAsync('pin-*');
-  console.log('pins: ', pins);
 
   res.send(pins.map(x => x.replace('pin-', '')));
 });

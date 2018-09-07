@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // start with fake data for testing purposes
-    beers: UNTAPPD.exampleBeer ? [{ ...UNTAPPD.exampleBeer, bid: 1 }, { ...UNTAPPD.exampleBeer, bid: 2 }] : [],
+    beers: UNTAPPD.exampleBeer ? { 14: {...UNTAPPD.exampleBeer, bid: 1, pin: 14}, 15: { ...UNTAPPD.exampleBeer, bid: 2, pin: 15 }} : {},
     pins: [],
   },
   getters: {
@@ -26,9 +26,10 @@ export default new Vuex.Store({
 			}
     },
 
-    ADD_BEER: (state, beer) => {
+    ADD_BEER: (state, { beer, pin }) => {
       console.log('adding beer', beer);
       beer.tapped = new Date;
+      beer.pin = pin;
       if (beer.beer_label_hd != null && beer.beer_label_hd.length) {
         beer.image = beer.beer_label_hd
       } else if (beer.brewery.brewery_label != null && beer.brewery.brewery_label.length) {
@@ -37,28 +38,29 @@ export default new Vuex.Store({
         // Untappd will set a default beer image if none are available
         beer.image = beer.beer_label
       }
-      state.beers.push(beer);
+      Vue.set(state.beers, pin, beer);
+
     },
-    REMOVE_BEER: (state, bid) => {
-      state.beers = state.beers.filter(b => b.bid !== bid);
+    REMOVE_BEER: (state, pin) => {
+      // delete state.beers[pin];
+      Vue.set(state.beers, pin, null);
     },
     UPDATE_BEER: (state, beer) => {
-      const oldBeer = state.beers.filter(b => b.bid === beer.bid);
-      state.beers.splice(state.beers.indexOf(oldBeer), 1, beer);
+      Vue.set(state.beers, beer.pin, beer);
     },
     SET_PINS: (state, pins) => {
       state.pins = pins;
     }
   },
   actions: {
-    addBeer: ({ commit }, { beer }) => {
+    addBeer: ({ commit }, { beer, pin }) => {
       console.log('getting beer info', beer);
       return axios.get(`https://api.untappd.com/v4/beer/info/${beer.bid}?client_id=${UNTAPPD.client_id}&client_secret=${UNTAPPD.client_secret}`)
         .then(res => {
           console.log('res', res);
           const beerInfo = res.data && res.data.response && res.data.response.beer;
           if (!beerInfo || !beerInfo.bid) throw new Error(`Beer ${beer.bid} not found`);
-          commit('ADD_BEER', beerInfo);
+          commit('ADD_BEER', { beer: beerInfo, pin: pin });
         })
         .catch(err => {
           console.error('Error from Untappd: ', err);
