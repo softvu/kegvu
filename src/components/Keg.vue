@@ -12,7 +12,7 @@
           </linearGradient>
         </defs>
         <g>
-          <rect ref="fill" :x="x" :y="y" :width="width" :height="height" fill="url(#gradient)"></rect>
+          <rect ref="fill" :x="x" :y="y" :width="width" :height="height"></rect>
           <path
             d="M55.977,25.128H43.751c-2.082,0-3.777,1.694-3.777,3.777c0,2.082,1.694,3.776,3.777,3.776h12.226   c2.081,0,3.776-1.694,3.776-3.776C59.753,26.822,58.058,25.128,55.977,25.128z M55.977,30.099H43.751   c-0.659,0-1.195-0.535-1.195-1.194c0-0.659,0.536-1.195,1.195-1.195h12.226c0.659,0,1.194,0.536,1.194,1.195   C57.171,29.563,56.635,30.099,55.977,30.099z"
             id="path6" />
@@ -98,7 +98,11 @@ export default {
         this.y = HEIGHT + Y - this.height;
 
         this.color = perc2color(p);
-        this.$forceUpdate();
+
+        this.$nextTick(() => {
+          this.$refs.fill.setAttribute('fill', `${this.color}`);
+        });
+        // this.$forceUpdate();
       },
       immediate: true,
     },

@@ -43,7 +43,7 @@ export default new Vuex.Store({
       state.beers = state.beers.filter(b => b.bid !== bid);
     },
     UPDATE_BEER: (state, beer) => {
-      const oldBeer = state.beers.filter(b => b.bid === beer.bid);
+      const oldBeer = state.beers.find(b => b.bid === beer.bid);
       state.beers.splice(state.beers.indexOf(oldBeer), 1, beer);
     },
     SET_PINS: (state, pins) => {
