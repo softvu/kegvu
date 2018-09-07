@@ -16,7 +16,7 @@ pins = args.pins
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
-buttons = []
+buttons = [Button(args[0]), Button(args[1])]
 
 def pressed(pin):
     def handler():
@@ -34,42 +34,13 @@ def pressed(pin):
 
     return handler
 
-for pin in pins:
-    pinButton = Button(pin)
-    pinButton.when_pressed = pressed(pin)
-    buttons.append(pinButton)
+# for pin in pins:
+for button in buttons:
+    print(button)
+    continue
+    # pinButton = Button(pin)
+    # button.when_pressed = pressed(pin)
 
-    print('Listening on pin {}...'.format(pin))
+    # print('Listening on pin {}...'.format(pin))
 
 pause()
-
-# last_val = None
-# start = datetime.now()
-# hertz = 0
-# loops = 1
-# pulses = 0
-# lastline = ''
-# while True:
-#     try:
-#         current_time = datetime.now()
-#         secdiff = (current_time - start).seconds
-#         hertz = loops / (secdiff or 1)
-
-#         val = pin.value
-#         #print(num, end='', flush=True)
-#         if val is True and last_val is False:
-#             pulses += 1
-
-#         if secdiff > 0 and secdiff % 10 is 0:
-#             line = 'Liters: {} [{}]'.format(pulses / PULSES_PER_LITER, pulses)
-#             if line != lastline:
-#                 print(line)
-#                 lastline = line
-
-#         last_val = val
-#         loops = loops + 1
-
-#         time.sleep(.001)
-#     except KeyboardInterrupt:
-#         print('Liters: {} [{}]'.format(pulses / PULSES_PER_LITER, pulses))
-#         sys.exit()
