@@ -8,15 +8,11 @@ PULSES_PER_LITER = 450
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('pins', metavar='P', type=int, nargs='+',
-                    help='A Pi pin to listen to (BOARD numbering)')
+                    help='A Pi pin to listen to (BCM numbering)')
 args = parser.parse_args()
-# print(args.pins)
-# quit()
 pins = args.pins
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
-
-buttons = [Button(args[0]), Button(args[1])]
 
 def pressed(pin):
     def handler():
@@ -34,13 +30,12 @@ def pressed(pin):
 
     return handler
 
-# for pin in pins:
-for button in buttons:
-    print('BUTTON', button)
-    continue
-    # pinButton = Button(pin)
-    # button.when_pressed = pressed(pin)
+button1 = Button(pins[0])
+button2 = Button(pins[1])
 
-    # print('Listening on pin {}...'.format(pin))
+button1.when_pressed = pressed(pins[0])
+button2.when_pressed = pressed(pins[1])
+
+print('Listening on pins: {}...'.format(', '.join(str(p) for p in pins)))
 
 pause()
