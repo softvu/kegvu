@@ -36,7 +36,7 @@ def pressed(pin):
 
 # for pin in pins:
 for button in buttons:
-    print(button)
+    print('BUTTON', button)
     continue
     # pinButton = Button(pin)
     # button.when_pressed = pressed(pin)
