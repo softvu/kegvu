@@ -1,0 +1,7 @@
+apps:
+  - script: ./pi/listen_meters.py
+    args: "14"
+    interpreter: "/usr/bin/python3"
+  - script: ./api/index.js
+  - script: ./node_modules/.bin/serve
+    args: "-s -l 5000 dist"
