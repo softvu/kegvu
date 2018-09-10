@@ -51,7 +51,7 @@
       </v-dialog>
 
       <v-btn v-show="editMode" @click.stop="openDialog()" color="primary">Edit</v-btn>
-      <v-btn v-show="editMode" @click="REMOVE_BEER(beer.bid)" color="error">Delete</v-btn>
+      <v-btn v-show="editMode" @click="REMOVE_BEER(beer)" color="error">Delete</v-btn>
     </div>
   </div>
 </template>

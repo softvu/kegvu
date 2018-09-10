@@ -39,9 +39,8 @@ export default new Vuex.Store({
         beer.image = beer.beer_label
       }
       Vue.set(state.beers, pin, beer);
-
     },
-    REMOVE_BEER: (state, pin) => {
+    REMOVE_BEER: (state, { pin }) => {
       // delete state.beers[pin];
       Vue.set(state.beers, pin, null);
     },
