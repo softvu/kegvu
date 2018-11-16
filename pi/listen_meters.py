@@ -4,7 +4,7 @@ import redis
 from gpiozero import Button, Device, InputDevice
 from signal import pause
 
-PULSES_PER_LITER = 450
+PULSES_PER_LITER = 563
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('pins', metavar='P', type=int, nargs='+',
