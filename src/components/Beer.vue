@@ -6,7 +6,6 @@
       <div class="heading-wrapper">
         <h5 class="subheading font-weight-light"><span>{{ beer.brewery.brewery_name }} - </span>Tapped {{ beer.tapped | formatDate }}</h5>
         <h1 class="display-2 text-truncate">{{ beer.beer_name }}</h1>
-        <!--<h3 class="display-1 text-no-wrap font-weight-light">{{ beer.brewery.brewery_name }}</h3>-->
       </div>
       <br/>
       <div class="description">
@@ -17,7 +16,7 @@
             <v-flex xs2>{{ beer.beer_ibu }} IBU</v-flex>
           </v-layout>
         </h5>
-        <p class="subheading condensed">{{ beer.beer_description || 'No description'}}</p>
+        <p class="subheading condensed">{{ beer.beer_description || 'No description' }}</p>
       </div>
     </div>
     <div>
@@ -60,9 +59,9 @@
 
 <style scoped lang="scss">
 @font-face {
-  font-family: "Signboard";
-  font-style: normal;
   font-weight: 400;
+  font-style: normal;
+  font-family: "Signboard";
   src: url(../assets/fonts/signboard.woff2);
 }
 
@@ -80,9 +79,9 @@
 
 .beer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   position:relative;
+  align-items: center;
+  flex-direction: column;
   
   .content-wrapper {
     padding: 36px 88px 0px 88px;
@@ -93,18 +92,18 @@
   }
 
   .display-2 {
-    color: #ffffff;
     opacity: .9;
+    color: #ffffff;
     max-width: 25ch;
     text-transform: uppercase;
-    text-shadow: 2px 2px 7px rgba(0,0,0,.6);
     font-family: 'Signboard' !important;
+    text-shadow: 2px 2px 7px rgba( 0, 0, 0, .6);
   }
   .label {
     left: 12%;
+    z-index: 4;
     width: 80px;
     height: 80px;
-    z-index: 4;
     min-width: 75px;
     margin-top: -15px;
     border-radius: 50%;
