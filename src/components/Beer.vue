@@ -1,22 +1,24 @@
 <template>
   <div class="beer mt-5" @click="editMode = !editMode">
+    <img :src="beer.image" class="label"/>
     <keg :percent="percent" ></keg>
-    <div>
-      <img :src="beer.image" class="label"/>
-      <h1 class="display-2 text-truncate">{{ beer.beer_name }}</h1>
-      <h3 class="display-1 text-no-wrap font-weight-light">{{ beer.brewery.brewery_name }}</h3>
-    </div>
-    <br/>
-    <div class="description">
-      <h5 class="headline">
-        <v-layout>
-          <v-flex xs8>{{ beer.beer_style }}</v-flex>
-          <v-flex xs2>{{ beer.beer_abv }}% ABV</v-flex>
-          <v-flex xs2>{{ beer.beer_ibu }} IBU</v-flex>
-        </v-layout>
-      </h5>
-      <p class="subheading condensed">{{ beer.beer_description || 'No description'}}</p>
-      <h5 class="subheading font-weight-light">Tapped {{ beer.tapped | formatDate }}</h5>
+    <div class="content-wrapper">
+      <div class="heading-wrapper">
+        <h5 class="subheading font-weight-light"><span>{{ beer.brewery.brewery_name }} - </span>Tapped {{ beer.tapped | formatDate }}</h5>
+        <h1 class="display-2 text-truncate">{{ beer.beer_name }}</h1>
+        <!--<h3 class="display-1 text-no-wrap font-weight-light">{{ beer.brewery.brewery_name }}</h3>-->
+      </div>
+      <br/>
+      <div class="description">
+        <h5 class="headline">
+          <v-layout>
+            <v-flex xs8>{{ beer.beer_style }}</v-flex>
+            <v-flex xs2>{{ beer.beer_abv }}% ABV</v-flex>
+            <v-flex xs2>{{ beer.beer_ibu }} IBU</v-flex>
+          </v-layout>
+        </h5>
+        <p class="subheading condensed">{{ beer.beer_description || 'No description'}}</p>
+      </div>
     </div>
     <div>
       <!-- <v-btn v-show="editMode" @click="editBeer" color="primary">Edit</v-btn> -->
@@ -57,22 +59,60 @@
 </template>
 
 <style scoped lang="scss">
+@font-face {
+  font-family: "Signboard";
+  font-style: normal;
+  font-weight: 400;
+  src: url(../assets/fonts/signboard.woff2);
+}
+
+.mt-5 {
+  margin-top: 64px !important;
+}
+
+.subheading {
+  margin-top: 16px;
+}
+
+.subheading span {
+  font-size: 24px;
+}
+
 .beer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position:relative;
+  
+  .content-wrapper {
+    padding: 36px 88px 0px 88px;
+  }
 
+  .heading-wrapper {
+    width: 100%;
+  }
+
+  .display-2 {
+    color: #ffffff;
+    opacity: .9;
+    max-width: 25ch;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 7px rgba(0,0,0,.6);
+    font-family: 'Signboard' !important;
+  }
   .label {
-    height: 9vh;
-    display: inline-block;
-    border-radius: 50%;
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
+    left: 12%;
+    width: 80px;
+    height: 80px;
+    z-index: 4;
     min-width: 75px;
+    margin-top: -15px;
+    border-radius: 50%;
+    position: absolute;
+    display: inline-block;
+    box-shadow: 2px 2px 5px black;
   }
   .description {
-    margin-left: 10px;
     max-width: 750px;
     min-width: 650px;
   }
