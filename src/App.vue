@@ -3,7 +3,7 @@
     <div class="black-bar"></div>
     <v-toolbar app d-flex align-center>
       <v-spacer/>
-      <v-toolbar-title><img src="./assets/logo.png" width='140px' alt="KegVu" style='margin-bottom: -7px;'/></v-toolbar-title>
+      <v-toolbar-title><img src="./assets/logo.png" alt="KegVu"/></v-toolbar-title>
       <v-spacer/>
       <!-- <BeerSearch v-if="beers.length < 2"/> -->
       <!-- <div id="particle-js" slot="extension"></div> -->
@@ -13,7 +13,7 @@
       <!-- <h2 v-else>Too many beers selected...</h2> -->
     </v-content>
     <v-footer fixed app>
-      <span>&nbsp;&copy; {{ (new Date()).getFullYear() }} Powered by <a href='https://untappd.com/'>Untappd</a> and <a href='https://www.softvu.com'><img src="./assets/softvu-logo.png" height='15px;' style='margin-bottom: -2px;'/></a></span>
+      <span>&nbsp;&copy; {{ (new Date()).getFullYear() }} Powered by <a href='https://untappd.com/'>Untappd</a> and <a href='https://www.softvu.com'><img src="./assets/softvu-logo.png"/></a></span>
     </v-footer>
   </v-app>
 </template>
@@ -51,6 +51,10 @@
   }
 }
 
+.v-toolbar__title img {
+  width: 120px;
+}
+
 .v-toolbar__title:not(:first-child) {
   width: 100%;
   opacity: .6;
@@ -60,8 +64,14 @@
 
 .v-footer {
   background: none !important;
+
   span {
     margin: 0 auto;
+  }
+
+  img {
+    height: 15px;
+    margin-bottom: -2px;
   }
 }
 </style>

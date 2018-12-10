@@ -3,12 +3,11 @@
     <v-layout wrap>
       <v-flex md5>
         <img src="./../assets/keg-back.png" class="back"/>
-        <!--<img src="./../assets/keg-beer.png" :style="{height: percent + '%'}" class="beer"/>-->
-        <div class="beer-wrapper"><div class="beer" :style="{height: percent + '%',background: color}"></div></div>
+        <div class="beer-wrapper"><div class="beer" :style="{ height: percent + '%', background: color }"></div></div>
         <img src="./../assets/keg-front.png" class="front"/>
       </v-flex>
       <v-flex md7>
-        <div class="percent" :style="{color: color}"><span>BEER LEVEL</span><br>{{ percent }}%</div> 
+        <div class="percent" :style="{ color }"><span>BEER LEVEL</span><br>{{ percent }}%</div> 
       </v-flex>
     </v-layout>
   </div>
@@ -140,8 +139,9 @@ export default {
 }
 
 function perc2color(perc) {
-	var r, g = 0;
-  var b = 55;
+	let r = 0;
+	let g = 0;
+	const b = 55;
 	if(perc < 50) {
 		r = 255;
 		g = Math.round(5.1 * perc);
@@ -150,7 +150,7 @@ function perc2color(perc) {
 		g = 255;
 		r = Math.round(355 - 2.0 * perc);
 	}
-	var h = r * 0x10000 + g * 0x100 + b * 0x1;
+	const h = r * 0x10000 + g * 0x100 + b * 0x1;
 	return '#' + ('000000' + h.toString(16)).slice(-6);
 }
 </script>
