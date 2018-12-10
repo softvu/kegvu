@@ -3,7 +3,7 @@
     <v-layout wrap>
       <v-flex md5>
         <img src="./../assets/keg-back.png" class="back"/>
-        <div class="beer-wrapper"><div class="beer" :style="{ height: percent + '%', background: color }"></div></div>
+        <div class="beer-wrapper"><div class="beer" :style="{ height: rounded + '%', background: color }"></div></div>
         <img src="./../assets/keg-front.png" class="front"/>
       </v-flex>
       <v-flex md7>
@@ -119,7 +119,12 @@ export default {
   props: {
     percent: {
       type: Number,
-      default: 100,
+      default: 99.9,
+    },
+  },
+  computed: {
+    rounded() {
+      return Math.round(this.percent);
     },
   },
   watch: {
