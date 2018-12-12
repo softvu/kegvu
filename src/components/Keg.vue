@@ -7,7 +7,7 @@
         <img src="./../assets/keg-front.png" class="front"/>
       </v-flex>
       <v-flex md7>
-        <div class="percent" :style="{ color }"><span>BEER LEVEL</span><br>{{ percent }}%</div> 
+        <div class="percent" :style="{ color }"><span>BEER LEVEL</span><br>{{ percent | round }}%</div>
       </v-flex>
     </v-layout>
   </div>
@@ -29,13 +29,13 @@
 
 .keg .front {
   z-index: 2;
-  width: 320px; 
+  width: 320px;
   position: relative;
 }
 
 .keg .back{
   z-index: 0;
-  width: 320px; 
+  width: 320px;
   position: absolute;
 }
 
@@ -68,7 +68,7 @@ svg g {
   bottom: 0;
   width: 100%;
   height: 100%;
-  position: absolute;  
+  position: absolute;
 }
 
 .percent {
@@ -105,16 +105,8 @@ const Y = 20;
 export default {
   data: () => ({
     width: WIDTH,
-    height: HEIGHT,
     x: X,
     y: Y,
-    // values: ```
-    // 1 0 0 0 0
-    // 0 1 0 0 0
-    // 0 0 1 0 0
-    // 0 0 0 1 0
-    // ```,
-    color: '#00FF00',
   }),
   props: {
     percent: {
@@ -126,36 +118,35 @@ export default {
     rounded() {
       return Math.round(this.percent);
     },
-  },
-  watch: {
-    percent: {
-      handler: function(p) {
-        const height = HEIGHT * (p / 100);
-        this.height = height;
-        this.y = HEIGHT + Y - this.height;
-
-        this.color = perc2color(p);
-
-        // this.$forceUpdate();
-      },
-      immediate: true,
+    /*
+    values:
+    1 0 0 0 0
+    0 1 0 0 0
+    0 0 1 0 0
+    0 0 0 1 0
+     */
+    color() {
+      return perc2color(this.percent);
     },
-  }
+    height() {
+      return HEIGHT * this.percent / 100;
+    },
+  },
 }
 
 function perc2color(perc) {
-	let r = 0;
-	let g = 0;
-	const b = 55;
-	if(perc < 50) {
-		r = 255;
-		g = Math.round(5.1 * perc);
-	}
-	else {
-		g = 255;
-		r = Math.round(355 - 2.0 * perc);
-	}
-	const h = r * 0x10000 + g * 0x100 + b * 0x1;
-	return '#' + ('000000' + h.toString(16)).slice(-6);
+  let r = 0;
+  let g = 0;
+  const b = 55;
+  if(perc < 50) {
+    r = 255;
+    g = Math.round(5.1 * perc);
+  }
+  else {
+    g = 255;
+    r = Math.round(355 - 2.0 * perc);
+  }
+  const h = r * 0x10000 + g * 0x100 + b * 0x1;
+  return '#' + ('000000' + h.toString(16)).slice(-6);
 }
 </script>
