@@ -7,7 +7,7 @@
         <img src="./../assets/keg-front.png" class="front"/>
       </v-flex>
       <v-flex md7>
-        <div class="percent" :style="{ color }"><span>BEER LEVEL</span><br>{{ percent }}%</div> 
+        <div class="percent" :style="{ color }"><span>BEER LEVEL</span><br>{{ rounded }}%</div> 
       </v-flex>
     </v-layout>
   </div>
