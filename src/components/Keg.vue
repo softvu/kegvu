@@ -115,9 +115,6 @@ export default {
     },
   },
   computed: {
-    rounded() {
-      return Math.round(this.percent);
-    },
     /*
     values:
     1 0 0 0 0
