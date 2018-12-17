@@ -82,7 +82,7 @@
   position:relative;
   align-items: center;
   flex-direction: column;
-  
+
   .content-wrapper {
     padding: 36px 88px 0px 88px;
   }

@@ -2,6 +2,7 @@ import '@babel/polyfill'
 import axios from 'axios';
 import Vue from 'vue'
 import VueParticles from 'vue-particles';
+import './filters';
 import './plugins/vuetify'
 import App from './App.vue'
 import './registerServiceWorker'
@@ -17,11 +18,11 @@ new Vue({
   render: h => h(App),
   beforeCreate() {
     this.$store.commit('initialiseStore');
-    
+
     this.$store.subscribe((mutation, state) => {
       // Store the state object as a JSON string
       localStorage.setItem('store', JSON.stringify(state));
     });
-    
+
 	}
 }).$mount('#app');
